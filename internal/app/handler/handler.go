@@ -29,7 +29,7 @@ func CorsSettings() *cors.Cors {
 		AllowedMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
 		AllowedOrigins:     []string{viper.GetString("http.protocol")},
 		AllowCredentials:   true,
-		AllowedHeaders:     []string{},
+		AllowedHeaders:     []string{"X-Real-IP", "Host", "X-Forwarded-For"},
 		OptionsPassthrough: true,
 		ExposedHeaders:     []string{},
 		Debug:              true,

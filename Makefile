@@ -5,7 +5,7 @@ db:
 run-local:
 	go run cmd/app/main.go
 run-deploy:
-	sudo docker-compose up --build
+	sudo docker-compose up
 swagger:
 	swag init -g cmd/app/main.go
 clean:
