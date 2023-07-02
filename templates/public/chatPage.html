@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>chat</h1>
+
+<p>
+    <button onclick="update()">update</button>
+</p>
+
+<script>
+    function update() {
+        fetch("http://localhost:8080/api/catalog/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    "user": {
+                        "last_name": "Узянов",
+                        "first_name": "Даниил",
+                        "sur_name": "Евгеньевич",
+                        "email": "daniil.uzianov@outlook.com",
+                        "phone_number": "89956778781",
+                        "city": "Москва",
+                    },
+                    "Loan": {
+                        "loan_amount": 300,
+                        "loan_duration": 10
+                    }
+                })
+        })
+            .then(res => {
+                if (res.redirected) {
+                    document.location = res.url
+                }
+            })
+    }
+</script>
+
+</body>
+</html>

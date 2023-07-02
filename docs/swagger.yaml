@@ -1,0 +1,394 @@
+basePath: /
+definitions:
+  handler.checkSubscriptionResponse:
+    properties:
+      active:
+        type: boolean
+      expired_date:
+        type: string
+    type: object
+  handler.errorResponse:
+    properties:
+      msg:
+        type: string
+    type: object
+  handler.getCodeReq:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  handler.reviewsResponse:
+    properties:
+      reviews:
+        items:
+          $ref: '#/definitions/models.Review'
+        type: array
+    type: object
+  handler.sendReviewRequest:
+    properties:
+      review:
+        $ref: '#/definitions/models.Review'
+    required:
+    - review
+    type: object
+  handler.signInReq:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+    required:
+    - code
+    - email
+    type: object
+  handler.suitableCompanies:
+    properties:
+      companies:
+        items:
+          $ref: '#/definitions/models.LoanCompany'
+        type: array
+    type: object
+  handler.updateReq:
+    properties:
+      loan:
+        $ref: '#/definitions/models.Loan'
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  models.Loan:
+    properties:
+      loan_amount:
+        type: integer
+      loan_duration:
+        type: integer
+    required:
+    - loan_amount
+    - loan_duration
+    type: object
+  models.LoanCompany:
+    properties:
+      _:
+        type: string
+      link_on_company_site:
+        type: string
+      logo:
+        items:
+          type: integer
+        type: array
+      max_loan_amount:
+        type: integer
+      max_loan_duration:
+        type: integer
+      min_loan_percent:
+        type: integer
+      name:
+        type: string
+      priority:
+        type: integer
+    required:
+    - _
+    - link_on_company_site
+    - logo
+    - max_loan_amount
+    - max_loan_duration
+    - min_loan_percent
+    - name
+    - priority
+    type: object
+  models.Review:
+    properties:
+      review:
+        type: string
+      reviewer_name:
+        type: string
+      reviwer_phone:
+        type: string
+    required:
+    - review
+    - reviewer_name
+    - reviwer_phone
+    type: object
+  models.User:
+    properties:
+      city:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      sur_name:
+        type: string
+    required:
+    - city
+    - email
+    - first_name
+    - last_name
+    - phone_number
+    - sur_name
+    type: object
+host: localhost
+info:
+  contact: {}
+  title: Zaimik API
+  version: "1.0"
+paths:
+  /:
+    post:
+      consumes:
+      - application/json
+      description: api endpoint that accepts the user's mail along with the authorization
+        code, checks the correctness of the code and sets cookies (session_id) in
+        the browser. responds with status 200 if successful, with status 400 if code
+        is invalid or email is invalid
+      parameters:
+      - description: email and code
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.signInReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: signIn
+      tags:
+      - publicAuth
+  /api/catalog:
+    post:
+      consumes:
+      - application/json
+      description: when user successfully pay for subscription, he can get sorted
+        catalog of loan companies
+      parameters:
+      - description: user update
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.updateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handler.suitableCompanies'
+            type: array
+        "204":
+          description: No Content
+          schema:
+            items:
+              $ref: '#/definitions/handler.suitableCompanies'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: getSortedSuitableCatalog
+      tags:
+      - api
+    put:
+      consumes:
+      - application/json
+      description: unfinished, because the online cash register is not connected,
+        do not use this
+      parameters:
+      - description: user update
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.updateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handler.suitableCompanies'
+            type: array
+        "204":
+          description: No Content
+          schema:
+            items:
+              $ref: '#/definitions/handler.suitableCompanies'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: updateUserGetLinkOnPayment
+      tags:
+      - unfinished
+  /api/check-subscription:
+    get:
+      consumes:
+      - application/json
+      description: after payment for subscription endpoint can answer what status
+        of subscription is it now
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.checkSubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: checkSubscription
+      tags:
+      - api
+  /api/send-review:
+    post:
+      consumes:
+      - application/json
+      description: api endpoint, accepts feedback from a person if he is authorized,
+        if not authorized, responds with an error
+      parameters:
+      - description: info of review
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.sendReviewRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: sendReview
+      tags:
+      - api
+  /api/sign-out:
+    post:
+      consumes:
+      - application/json
+      description: api endpoint, logs out the user if he is logged in
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: signOut
+      tags:
+      - api
+  /get-code:
+    post:
+      consumes:
+      - application/json
+      description: api endpoint that receives the user's mail, an authorization code
+        is sent to it, which must be entered in a special field, the code lives for
+        1 minute. responds with status 400 if invalid data is sent or invalid mail
+        is sent
+      parameters:
+      - description: email
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.getCodeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: getAuthCode
+      tags:
+      - publicAuth
+  /reviews:
+    get:
+      description: api endpoint, send all moderated reviews which consist in dataBase
+        in json format
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handler.reviewsResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: getReviews
+      tags:
+      - public
+swagger: "2.0"

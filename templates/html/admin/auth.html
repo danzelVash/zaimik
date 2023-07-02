@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auth</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Заполните форму</h2>
+    <div class="row">
+        <div class="input-field col s12">
+            <label for="admin_login">Логин</label>
+            <input type="text" id="admin_login" placeholder="Логин">
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <label for="admin_password">Пароль</label>
+            <input type="password" id="admin_password" placeholder="Пароль">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="sign_in_admin()">Войти</button>
+        </div>
+    </div>
+
+    <div class="row hidden">
+        <div class="input-field col s12">
+            <label for="auth_code">Код из почты</label>
+            <input type="text" id="auth_code" class="validate" placeholder="Код из почты">
+        </div>
+    </div>
+    <div class="row hidden">
+        <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="check_admin_auth_code()">Отправить</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<script type="text/javascript" src="/static/js/auth_admin.js"></script>
+
+</body>
+</html>

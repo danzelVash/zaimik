@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <style type="text/css">
+        header,
+        main,
+        footer {
+            padding-left: 240px;
+        }
+
+        body {
+            background: white;
+        }
+        @media only screen and (max-width: 992px) {
+            header,
+            main,
+            footer {
+                padding-left: 0;
+            }
+        }
+        #credits li,
+        #credits li a {
+            color: white;
+        }
+        #credits li a {
+            font-weight: bold;
+        }
+        .footer-copyright .container,
+        .footer-copyright .container a {
+            color: #BCC2E2;
+        }
+    </style>
+</head>
+<body>
+{{ .LeftBar }}
+<header>
+    <nav class="brown" role="navigation">
+        <div class="nav-wrapper">
+            <a style="margin-left: 5%; font-size: 20px" data-activates="slide-out" class="button-collapse show-on-large"
+               href="#!">Меню</a>
+
+            <ul class="right">
+                <li>
+                    <button class="btn waves-effect waves-light brown lighten-5 black-text" onclick="log_out()">Выйти</button>
+                </li>
+            </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+        </div>
+    </nav>
+    <nav>
+        <div class="nav-wrapper brown darken-2">
+            <a style="margin-left: 20px;" class="breadcrumb" href="{{ .Domain }}/admin/panel/">Главная</a>
+            <a class="breadcrumb" href="{{ .Domain }}/admin/panel/subscriptions/">Подписки</a>
+
+            <div style="margin-right: 20px;" id="timestamp" class="right"></div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="col s12">
+        <div style="padding: 35px;" align="center" class="card">
+            <div class="row">
+                <div class="left card-title">
+                    <b>Список подписок</b>
+                </div>
+<!--                <div class="left card-title" style="margin-left: 20px">-->
+<!--                    <a href="upload/"-->
+<!--                       class="btn brown lighten-1 waves-effect waves-light">Добавить отзыв</a>-->
+<!--                </div>-->
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th style="text-align: center">Id</th>
+                    <th style="text-align: center">UserId</th>
+                    <th style="text-align: center">Дата запроса</th>
+                    <th style="text-align: center">Дата окончания</th>
+                    <th style="text-align: center">Активна</th>
+                    <th style="text-align: center">Всего принесла денег</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{range .Subscriptions}}
+                <tr>
+                    <td>
+                        <a class="btn-floating brown waves-effect waves-light" style="text-align: center"
+                           href="{{.Id}}/">{{.Id}}</a>
+                    </td>
+                    <td style="text-align: center">{{.UserId}}</td>
+                    <td style="text-align: center">{{.RequestDate}}</td>
+                    <td style="text-align: center">{{.ExpiredDate}}</td>
+                    <td style="text-align: center; word-wrap: break-word; max-width: 300px;">{{.Status}}</td>
+                    <td style="text-align: center; word-wrap: break-word; max-width: 300px;">{{.Amount}}</td>
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{{ .Footer }}
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<script type="text/javascript" src="{{ .Domain }}/static/js/log_out_admin.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.button-collapse').sideNav();
+        $('.collapsible').collapsible();
+        $('select').material_select();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+@import '@/styles/vars.scss';
+
+.single-range-slider {
+	margin-top: 15px;
+	height: 6px;
+	background-color: rgba($color: #000000, $alpha: 0.5);
+
+	@media (max-width: #{$md+px}) {
+		margin-top: 19px;
+	}
+
+	.range-slider__thumb[data-upper] {
+		background-color: white;
+		border: 6px solid black;
+	}
+
+	.range-slider__thumb[data-lower] {
+		width: 0;
+	}
+
+	.range-slider__range {
+		border-radius: 6px;
+		height: 12px;
+		background-color: #000000;
+	}
+
+	.range-slider__thumb {
+		width: 30px;
+		height: 30px;
+	}
+}

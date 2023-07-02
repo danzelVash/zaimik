@@ -1,0 +1,25 @@
+@import '@/styles/vars.scss';
+
+.header {
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+	}
+}
+
+.nav-list {
+	@media (max-width: #{$lg+px}) {
+		background: linear-gradient(119.16deg, #71c7b7 -32.33%, #1bb234 62.81%);
+	}
+}
+
+.city-list {
+	@media (max-width: #{$lg+px}) {
+		@apply bg-gradient-to-r from-secondary to-primary;
+	}
+}

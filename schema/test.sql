@@ -1,0 +1,1 @@
+-- UPDATE companies SET name = '' WHERE id < 1;

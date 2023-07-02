@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+    <style type="text/css">
+        header,
+        main,
+        footer {
+            padding-left: 240px;
+        }
+
+        body {
+            backgroud: white;
+        }
+
+        @media only screen and (max-width: 992px) {
+            header,
+            main,
+            footer {
+                padding-left: 0;
+            }
+        }
+
+        #credits li,
+        #credits li a {
+            color: white;
+        }
+
+        #credits li a {
+            font-weight: bold;
+        }
+
+        .footer-copyright .container,
+        .footer-copyright .container a {
+            color: #BCC2E2;
+        }
+
+    </style>
+</head>
+
+<body>
+{{ .LeftBar }}
+
+<header>
+    <nav class="brown" role="navigation">
+        <div class="nav-wrapper">
+            <a style="margin-left: 5%; font-size: 20px" data-activates="slide-out" class="button-collapse show-on-large"
+               href="#!">Меню</a>
+
+            <ul class="right">
+                <li>
+                    <button class="btn waves-effect waves-light brown lighten-5 black-text" onclick="log_out()">Выйти
+                    </button>
+                </li>
+            </ul>
+
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+        </div>
+    </nav>
+
+    <nav>
+        <div class="nav-wrapper brown darken-2">
+            <a style="margin-left: 20px;" class="breadcrumb" href="{{ .Domain }}/admin/panel/">Главная</a>
+            <a class="breadcrumb" href="{{ .Domain }}/admin/panel/subscriptions/">Подписки</a>
+            <a class="breadcrumb" href="{{ .Domain }}/admin/panel/subscriptions/{{ .Subscription.Id }}">Изменить</a>
+
+            <div style="margin-right: 20px;" id="timestamp" class="right"></div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="col s12">
+        <div style="padding: 35px;" align="center" class="card">
+            <div class="row">
+                <div class="col s12">
+
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input disabled value="{{.Subscription.Id}}" id="id" type="text" class="validate">
+                            <label for="id">Id</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input disabled value="{{.Subscription.UserId}}" id="user_id" type="text" class="validate">
+                            <label for="user_id">UserId</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input disabled value="{{.Subscription.RequestDate}}" id="request_date" type="text"
+                                   class="validate">
+                            <label for="request_date">Reviewer phone</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input disabled value="{{.Subscription.ExpiredDate}}" id="expired_date" type="text" class="validate">
+                            <label for="expired_date">Дата окончания</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input disabled value="{{.Subscription.Status}}" id="status" type="text" class="validate">
+                            <label for="status">Активна</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input disabled value="{{.Subscription.Amount}}" id="amount" type="text" class="validate">
+                            <label for="amount">Всего принесла денег</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="new_expired_date">Новая дата окончания</label>
+                        <input id="new_expired_date" type="datetime-local" class="datepicker">
+                    </div>
+
+                    <div class="row">
+                        <div class="col s2">
+                            <p>Проверено</p>
+                        </div>
+                        <div style="margin-top: 1%" class="switch col s3">
+                            <label for="moderated">
+                                Нет
+                                <input id="moderated" type="checkbox">
+                                <span class="lever"></span>
+                                Да
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s2">
+                            <button class="btn brown waves-effect waves-light" onclick="update_subscription()">
+                                Сохранить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</main>
+
+{{ .Footer }}
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<script type="text/javascript" src="{{ .Domain }}/static/js/log_out_admin.js"></script>
+<script type="text/javascript" src="{{ .Domain }}/static/js/subscription_refactor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.button-collapse').sideNav();
+        $('.collapsible').collapsible();
+        $('select').material_select();
+    });
+</script>
+
+</body>
+</html>

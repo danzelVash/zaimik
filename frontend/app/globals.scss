@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '@/styles/vars.scss';
+
+* {
+	-webkit-tap-highlight-color: transparent;
+}
+
+:focus {
+	outline: none;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+	overflow-x: hidden;
+	@apply bg-primary-light;
+
+	&.lock {
+		overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
+	}
+}
+
+.layout {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	font-weight: 300;
+}
+
+main {
+	flex: 1 0 auto;
+	margin-top: 108px;
+	@media (max-width: #{$lg+px}) {
+		margin-top: 80px;
+	}
+	@media (max-width: #{$md+px}) {
+		margin-top: 76px;
+	}
+}
+
+.container-xl {
+	@apply max-w-container-xl mx-auto px-4;
+	@media (max-width: #{$lg+px}) {
+		&.container-full {
+			@apply px-0;
+		}
+	}
+}
+
+.container-md {
+	@apply max-w-container-md mx-auto px-4;
+	@media (max-width: #{$lg+px}) {
+		&.container-full {
+			@apply px-0;
+		}
+	}
+}
+
+.container-sm {
+	@apply max-w-container-sm mx-auto px-4;
+	@media (max-width: #{$lg+px}) {
+		&.container-full {
+			@apply px-0;
+		}
+	}
+}
+
+.section {
+	padding: 50px 0;
+	@media (max-width: #{$lg+px}) {
+		padding: 45px 0;
+	}
+	@media (max-width: #{$md+px}) {
+		padding: 25px 0;
+	}
+}
+
+.main-gradient {
+	@apply bg-gradient-to-r from-secondary to-primary;
+}
+

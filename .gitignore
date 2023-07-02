@@ -1,0 +1,5 @@
+.idea
+.env
+pgdata
+logs
+internal/app/configs/deploy_config.yml

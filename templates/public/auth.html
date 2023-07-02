@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Вход</h1>
+
+<p>
+    <label for="email">
+        <input type="text" id="email" placeholder="email">
+    </label>
+
+    <button onclick="get_code()">Получить код</button>
+
+    <label>
+        <input type="text" id="code" placeholder="Код из почты">
+    </label>
+
+    <button onclick="check_code()">Войти</button>
+
+</p>
+
+<script>
+    function get_code() {
+        let email = document.querySelector('#email');
+
+        fetch("http://localhost:8080/get-code/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"email": email.value})
+        })
+            .then(res => {
+                if (res.redirected) {
+                    document.location = res.url
+                }
+            })
+    }
+
+    function check_code() {
+        let email = document.querySelector('#email');
+        let code = document.querySelector('#code');
+
+        fetch("http://localhost:8080/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "email": email.value,
+                "code": code.value
+            })
+        })
+            .then(res => {
+                if (res.redirected) {
+                    document.location = res.url
+                }
+            })
+    }
+</script>
+
+</body>
+</html>
